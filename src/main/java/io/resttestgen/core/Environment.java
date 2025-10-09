@@ -1,0 +1,137 @@
+package io.resttestgen.core;
+
+import io.resttestgen.boot.ApiUnderTest;
+import io.resttestgen.boot.Configuration;
+import io.resttestgen.core.datatype.NormalizedParameterName;
+import io.resttestgen.core.dictionary.Dictionary;
+import io.resttestgen.core.helper.Experience;
+import io.resttestgen.core.helper.ExtendedRandom;
+import io.resttestgen.core.openapi.OpenApi;
+import io.resttestgen.core.openapi.OpenApiParser;
+import io.resttestgen.core.operationdependencygraph.OperationDependencyGraph;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * A container class for all the test environment components of the RestTestGen Core, such as the parsed specification,
+ * dictionaries, the Operation Dependency Graph, etc.
+ * Implemented as singleton for easy access from any class.
+ */
+public class Environment {
+
+    private static final Logger logger = LogManager.getLogger(Environment.class);
+
+    private static Environment instance = null;
+
+    private Configuration configuration;
+    private ApiUnderTest apiUnderTest;
+    private OpenApi openAPI;
+    private OperationDependencyGraph operationDependencyGraph;
+    private Dictionary globalResponseDictionary;
+    private Dictionary globalRequestDictionary;
+    private Dictionary partialDictionary;
+    private ExtendedRandom random;
+    private Experience experience;
+
+    private Environment() {}
+
+    /**
+     * Sets up testing environment given a configuration and an API under test (as class instance).
+     * NOTE: the API under test specified in the configuration file as string is ignored, in favour of the ApiUnderTest
+     * class instance provided as argument to the method.
+     * @param configuration the configuration.
+     * @param apiUnderTest the API under test.
+     */
+    public Environment setUp(@NotNull Configuration configuration, @NotNull ApiUnderTest apiUnderTest) {
+        this.configuration = configuration;
+        this.apiUnderTest = apiUnderTest;
+        NormalizedParameterName.setQualifiableNames(configuration.getQualifiableParameterNames());
+        this.apiUnderTest = apiUnderTest;
+        this.openAPI = OpenApiParser.parse(apiUnderTest);
+        this.operationDependencyGraph = new OperationDependencyGraph(openAPI);
+        this.globalResponseDictionary = new Dictionary();
+        this.globalRequestDictionary = new Dictionary();
+        this.partialDictionary = new Dictionary();
+        this.random = new ExtendedRandom();
+        this.experience = new Experience();
+
+        return this;
+    }
+
+    public static Environment getInstance() {
+        if (instance == null) {
+            instance = new Environment();
+        }
+        return instance;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
+
+    public void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+    }
+
+    public ApiUnderTest getApiUnderTest() {
+        return apiUnderTest;
+    }
+
+    public OpenApi getOpenAPI() {
+        return openAPI;
+    }
+
+    public void setOpenAPI(OpenApi openAPI) {
+        this.openAPI = openAPI;
+    }
+
+    public OperationDependencyGraph getOperationDependencyGraph() {
+        return operationDependencyGraph;
+    }
+
+    public void setOperationDependencyGraph(OperationDependencyGraph operationDependencyGraph) {
+        this.operationDependencyGraph = operationDependencyGraph;
+    }
+
+    public Dictionary getGlobalResponseDictionary() {
+        return globalResponseDictionary;
+    }
+
+    public Dictionary getGlobalRequestDictionary() {
+        return globalRequestDictionary;
+    }
+
+    public Dictionary getPartialDictionary() {
+        return partialDictionary;
+    }
+
+    public void setPartialDictionary(Dictionary partialDictionary) {
+        this.partialDictionary = partialDictionary;
+    }
+
+    public ExtendedRandom getRandom() {
+        return random;
+    }
+
+    public void setRandom(ExtendedRandom random) {
+        this.random = random;
+    }
+
+    public Experience getExperience() {
+        return experience;
+    }
+
+    /**
+     * Resets the testing environment by setting all attributes to null.
+     */
+    public Environment reset() {
+        configuration = null;
+        apiUnderTest = null;
+        openAPI = null;
+        operationDependencyGraph = null;
+        globalResponseDictionary = null;
+        random = null;
+        return this;
+    }
+}
