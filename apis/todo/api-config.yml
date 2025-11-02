@@ -1,0 +1,3 @@
+name: Todo API
+specificationFileName: openapi.json
+host: "http://localhost:8081/"
