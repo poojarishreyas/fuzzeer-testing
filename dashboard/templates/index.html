@@ -1,0 +1,1243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>64-BIT  // CYBER</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Prism JS for Syntax Highlighting -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-twilight.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05050A;
+      --panel-bg: rgba(20, 20, 25, 0.6);
+      --panel-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-primary: #8b5cf6;
+      --accent-secondary: #6366f1;
+      --success: #10b981;
+      --error: #ef4444;
+      --warning: #f59e0b;
+      --font-sans: 'Inter', sans-serif;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: -1;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    body::before {
+      width: 600px; height: 600px;
+      background: var(--accent-primary);
+      top: -200px; left: -200px;
+    }
+    body::after {
+      width: 500px; height: 500px;
+      background: var(--accent-secondary);
+      bottom: -100px; right: -100px;
+    }
+
+    .glass-panel {
+      background: var(--panel-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 40px;
+      border-bottom: 1px solid var(--panel-border);
+      background: rgba(5, 5, 10, 0.7);
+      backdrop-filter: blur(20px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+    .brand-text {
+      background: linear-gradient(135deg, #fff, #a5b4fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .brand-icon {
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4);
+      animation: float-icon 3s ease-in-out infinite;
+    }
+    @keyframes float-icon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(139, 92, 246, 0.6); }
+    }
+    .sys-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+    .sys-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* PIPELINE (STEPPER) */
+    .pipeline-wrapper {
+      padding: 32px 40px;
+      display: flex;
+      justify-content: center;
+    }
+    .pipeline {
+      display: flex;
+      align-items: center;
+      max-width: 900px;
+      width: 100%;
+    }
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      position: relative;
+      flex: 1;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
+    .step-connector {
+      flex: 1.5;
+      height: 4px;
+      background: var(--panel-border);
+      border-radius: 2px;
+      margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-connector::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, var(--accent-secondary), var(--accent-primary));
+      transition: all 0.6s ease;
+    }
+    .step-connector.active::after {
+      left: 0;
+      animation: pulse-flow 2s infinite;
+    }
+    .step-connector.done::after { left: 0; }
+    @keyframes pulse-flow {
+      0% { opacity: 0.8; }
+      50% { opacity: 1; box-shadow: 0 0 10px var(--accent-primary); }
+      100% { opacity: 0.8; }
+    }
+
+    .step-icon {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 2px solid var(--panel-border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text-muted);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 2;
+      backdrop-filter: blur(8px);
+    }
+    .step:hover .step-icon {
+      box-shadow: 0 0 0 4px rgba(255,255,255,0.1);
+    }
+    .step-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.4s ease;
+      text-align: center;
+    }
+
+    /* Active Step Emphasis */
+    .step.active .step-icon {
+      border-color: var(--accent-primary);
+      background: rgba(139, 92, 246, 0.15);
+      color: #fff;
+      box-shadow: 0 0 0 6px rgba(139, 92, 246, 0.2), 0 0 20px rgba(139, 92, 246, 0.5);
+      transform: scale(1.25);
+      animation: pulse-active 2s infinite;
+    }
+    @keyframes pulse-active {
+      0%, 100% { box-shadow: 0 0 0 6px rgba(139, 92, 246, 0.2), 0 0 20px rgba(139, 92, 246, 0.5); }
+      50% { box-shadow: 0 0 0 10px rgba(139, 92, 246, 0.1), 0 0 30px rgba(139, 92, 246, 0.7); }
+    }
+    .step.active .step-text { color: var(--text-main); text-shadow: 0 0 8px rgba(255,255,255,0.3); }
+    
+    .step.done .step-icon {
+      border-color: var(--success);
+      background: var(--success);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .step.done .step-text { color: var(--text-main); }
+    .step.error .step-icon {
+      border-color: var(--error);
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--error);
+      box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.15);
+    }
+    .step.error .step-text { color: var(--error); }
+
+    /* LAYOUT */
+    .container {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 40px 40px;
+    }
+
+    /* CONTROL PANEL */
+    .panel-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--panel-border);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.02);
+    }
+    .panel-body { padding: 24px; }
+
+    /* Drag-and-Drop Feedback */
+    .upload-zone {
+      border: 2px dashed var(--panel-border);
+      border-radius: 12px;
+      padding: 32px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 24px;
+    }
+    .upload-zone:hover, .upload-zone.drag {
+      border-color: var(--accent-primary);
+      background: rgba(139, 92, 246, 0.15);
+      box-shadow: inset 0 0 20px rgba(139, 92, 246, 0.1);
+    }
+    .upload-icon {
+      font-size: 2.5rem;
+      margin-bottom: 12px;
+      color: var(--text-muted);
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+    .upload-zone:hover .upload-icon {
+      transform: translateY(-4px) scale(1.1);
+      color: var(--accent-primary);
+    }
+    .upload-text {
+      font-size: 0.9rem;
+      color: #e2e8f0; /* Better contrast */
+      line-height: 1.5;
+    }
+    .upload-filename {
+      margin-top: 12px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #a5b4fc; /* Better contrast */
+      font-weight: 500;
+    }
+    input[type="file"] { display: none; }
+
+    .field { margin-bottom: 20px; }
+    .field label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #cbd5e1; /* Brighter label text */
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .field input {
+      width: 100%;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text-main);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+    .field input:focus {
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+      font-family: var(--font-display);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      margin-bottom: 12px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    .btn:not(:disabled):hover::before { left: 100%; }
+    .btn:not(:disabled):active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; filter: grayscale(0.5); }
+
+    /* Button Hierarchy: Primary button pops more */
+    .btn-primary {
+      background: linear-gradient(135deg, #a78bfa, #6366f1);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+      font-size: 1.05rem;
+      padding: 16px 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .btn-primary:not(:disabled):hover { 
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.6); 
+      transform: translateY(-2px);
+    }
+
+    .btn-warning {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fbbf24;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+    }
+    .btn-warning:not(:disabled):hover { background: rgba(245, 158, 11, 0.2); }
+
+    .btn-success {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 0.9rem;
+      padding: 12px 16px;
+    }
+    .btn-success:not(:disabled):hover { background: rgba(16, 185, 129, 0.2); }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+      font-size: 0.9rem;
+      padding: 12px 16px;
+    }
+    .btn-danger:not(:disabled):hover { box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5); }
+
+    /* STATUS BAR */
+    #status-bar {
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 20px;
+      display: none;
+      animation: fade-in 0.3s ease;
+    }
+    #status-bar.show { display: block; }
+    .status-info { background: rgba(99, 102, 241, 0.1); color: #818cf8; border: 1px solid rgba(99, 102, 241, 0.2); }
+    .status-success { background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
+    .status-error { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+    /* RIGHT PANEL & TABS */
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--panel-border);
+      padding: 0 8px;
+      background: rgba(255,255,255,0.01);
+    }
+    .tab {
+      padding: 16px 24px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+    }
+    .tab:hover { 
+      color: var(--text-main); 
+      background: rgba(255,255,255,0.03); /* Hover background shift */
+    }
+    .tab.active { color: var(--accent-primary); font-weight: 600; background: rgba(139, 92, 246, 0.05); }
+    .tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; left: 0;
+      width: 100%; height: 2px;
+      background: var(--accent-primary);
+      box-shadow: 0 -2px 8px rgba(139, 92, 246, 0.5);
+    }
+    .tab-indicator {
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: transparent;
+      margin-left: 6px;
+      vertical-align: middle;
+      transition: all 0.3s ease;
+    }
+    .tab-indicator.ready {
+      background: var(--success);
+      box-shadow: 0 0 8px var(--success);
+    }
+
+    .tab-content {
+      display: none;
+      padding: 24px;
+      animation: fade-in 0.4s ease forwards;
+    }
+    .tab-content.active { display: block; }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* FULLSCREEN TOGGLE */
+    .fullscreen {
+      position: fixed !important;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: 9999;
+      background: rgba(5,5,10,0.95);
+      backdrop-filter: blur(20px);
+      padding: 40px;
+      display: flex; flex-direction: column;
+    }
+    .fullscreen .code-viewer { height: 100% !important; }
+
+    /* VIEWERS & POWER USER FEATURES */
+    .code-container {
+      position: relative;
+    }
+    .code-actions {
+      position: absolute;
+      top: 10px; right: 10px;
+      display: flex; gap: 8px;
+      z-index: 10;
+    }
+    .icon-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      transition: all 0.2s;
+    }
+    .icon-btn:hover { background: rgba(255,255,255,0.2); }
+
+    .code-viewer {
+      background: rgba(0,0,0,0.4) !important;
+      border: 1px solid var(--panel-border) !important;
+      border-radius: 8px !important;
+      padding: 20px !important;
+      padding-top: 40px !important; /* space for actions */
+      height: 520px;
+      overflow-y: auto !important;
+      font-family: var(--font-mono) !important;
+      font-size: 0.85rem !important;
+      line-height: 1.6 !important;
+      color: #a5b4fc;
+      margin: 0 !important;
+    }
+    .code-viewer::-webkit-scrollbar { width: 8px; }
+    .code-viewer::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+    .code-viewer::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
+    .code-viewer::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+    #log-terminal {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      padding: 20px;
+      height: 520px;
+      overflow-y: auto;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+    }
+    #log-terminal::-webkit-scrollbar { width: 8px; }
+    #log-terminal::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); border-radius: 4px; }
+    #log-terminal::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
+
+    /* ENDPOINTS */
+    #endpoints-list { display: flex; flex-wrap: wrap; gap: 12px; }
+    .endpoint-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid;
+      background: rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+    .endpoint-badge:hover { transform: translateY(-2px); filter: brightness(1.2); }
+    .method-get    { border-color: rgba(16, 185, 129, 0.5); color: #34d399; background: rgba(16, 185, 129, 0.1); }
+    .method-post   { border-color: rgba(59, 130, 246, 0.5); color: #60a5fa; background: rgba(59, 130, 246, 0.1); }
+    .method-put    { border-color: rgba(245, 158, 11, 0.5); color: #fbbf24; background: rgba(245, 158, 11, 0.1); }
+    .method-delete { border-color: rgba(239, 68, 68, 0.5);  color: #f87171; background: rgba(239, 68, 68, 0.1); }
+    .method-patch  { border-color: rgba(139, 92, 246, 0.5); color: #a78bfa; background: rgba(139, 92, 246, 0.1); }
+
+    /* LOG TERMINAL */
+    .log-entry {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 6px;
+      animation: slide-right 0.3s ease-out;
+    }
+    @keyframes slide-right {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .log-time { color: var(--text-muted); opacity: 0.6; flex-shrink: 0; }
+    .log-prefix { font-weight: 600; flex-shrink: 0; }
+    .log-info .log-prefix { color: #60a5fa; }
+    .log-info .log-msg { color: #e2e8f0; }
+    .log-success .log-prefix { color: #34d399; }
+    .log-success .log-msg { color: #a7f3d0; }
+    .log-warn .log-prefix { color: #fbbf24; }
+    .log-warn .log-msg { color: #fde68a; }
+    .log-error .log-prefix { color: #f87171; }
+    .log-error .log-msg { color: #fecaca; }
+
+    /* RESULTS */
+    .result-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--panel-border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .result-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      border-color: rgba(255,255,255,0.1);
+    }
+    .result-session {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-secondary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .result-session::before { content: '●'; font-size: 10px; color: var(--accent-primary); }
+    .result-stats {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+    .stat {
+      text-align: center;
+      padding: 16px 8px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    .stat .num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .stat .label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .stat-pass .num { color: #10b981; }
+    .stat-fail .num { color: #ef4444; }
+    .stat-total .num { color: #3b82f6; }
+    .stat-rate .num { color: #f59e0b; }
+    .stat-vuln .num { color: #8b5cf6; }
+
+    /* EMPTY STATES */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--text-muted);
+      border: 2px dashed var(--panel-border);
+      border-radius: 12px;
+      background: rgba(0,0,0,0.1);
+    }
+    .empty-state-graphic {
+      width: 80px; height: 80px;
+      border-radius: 50%;
+      border: 2px dashed rgba(139, 92, 246, 0.5);
+      animation: spin-slow 8s linear infinite;
+      margin-bottom: 20px;
+      display: flex; justify-content: center; align-items: center;
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+    .empty-state-graphic::after {
+      content: '✧';
+      font-size: 2rem;
+      color: var(--accent-primary);
+      animation: pulse-op 2s infinite alternate;
+    }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    @keyframes pulse-op { from { opacity: 0.4; } to { opacity: 1; text-shadow: 0 0 10px var(--accent-primary); } }
+
+    /* FIX META */
+    .fix-meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding: 16px 24px;
+      background: rgba(139, 92, 246, 0.1);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      border-radius: 8px;
+    }
+    .fix-meta .bugs-count {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent-primary);
+    }
+    .fix-meta .bugs-label {
+      font-size: 0.95rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .dl-btn {
+      margin-left: auto;
+      padding: 10px 20px;
+      background: var(--success);
+      color: #fff;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+    .dl-btn:hover { background: #059669; box-shadow: 0 6px 16px rgba(16, 185, 129, 0.5); transform: translateY(-2px); }
+
+    .spinner {
+      display: inline-block;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand">
+      <div class="brand-icon">✧</div>
+      <div class="brand-text">64-BIT </div>
+    </div>
+    <div class="sys-status">
+      <div class="sys-dot active"></div>
+      <div style="display:flex; flex-direction:column; line-height:1.2;">
+        <span>SYS ONLINE</span>
+        <span style="font-size:0.65rem; color:var(--text-muted); font-family:var(--font-sans);" id="last-sync">Sync: Active</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- PIPELINE -->
+  <div class="pipeline-wrapper">
+    <div class="pipeline">
+      <div class="step active" id="step-1" onclick="setStep(1)">
+        <div class="step-icon">1</div>
+        <div class="step-text">Upload Source</div>
+      </div>
+      <div class="step-connector" id="conn-1"></div>
+
+      <div class="step" id="step-2" onclick="setStep(2)">
+        <div class="step-icon">2</div>
+        <div class="step-text">Gen Spec</div>
+      </div>
+      <div class="step-connector" id="conn-2"></div>
+
+      <div class="step" id="step-3" onclick="setStep(3)">
+        <div class="step-icon">3</div>
+        <div class="step-text">Start API</div>
+      </div>
+      <div class="step-connector" id="conn-3"></div>
+
+      <div class="step" id="step-4" onclick="setStep(4)">
+        <div class="step-icon">4</div>
+        <div class="step-text">Scan & Test</div>
+      </div>
+      <div class="step-connector" id="conn-4"></div>
+
+      <div class="step" id="step-5" onclick="setStep(5)">
+        <div class="step-icon">5</div>
+        <div class="step-text">Patch Code</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="container">
+    
+    <!-- LEFT PANEL -->
+    <aside class="glass-panel">
+      <div class="panel-header">
+        Control Interface
+      </div>
+      <div class="panel-body">
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+          <div class="upload-icon">📄</div>
+          <div class="upload-text">Click or drag &amp; drop<br>your API code file here</div>
+          <div class="upload-filename" id="filename-display">No file selected</div>
+        </div>
+        <input type="file" id="file-input" accept=".py,.js,.ts" />
+
+        <div class="field">
+          <label>API Designation</label>
+          <input type="text" id="api-name" placeholder="e.g. custom-api" value="custom-api" />
+        </div>
+
+        <div class="field">
+          <label>Server URL</label>
+          <input type="text" id="server-url" placeholder="http://localhost:8081" value="http://localhost:8081" />
+        </div>
+
+        <div class="field">
+          <label>Server Port</label>
+          <input type="text" id="server-port" placeholder="8081" value="8081" />
+        </div>
+
+        <div id="status-bar"></div>
+
+        <button class="btn btn-primary" id="btn-generate" onclick="generateSpec()">
+          ✨ Generate Spec
+        </button>
+
+        <button class="btn btn-warning" id="btn-start-api" onclick="startApi()" disabled>
+          ▶ Initialize API
+        </button>
+
+        <button class="btn btn-success" id="btn-run-tests" onclick="runTests()" disabled>
+          🚀 Run Test Suite
+        </button>
+
+        <button class="btn btn-danger" id="btn-fix-code" onclick="fixCode()" disabled>
+          🔧 AI Patch Vulnerabilities
+        </button>
+      </div>
+    </aside>
+
+    <!-- RIGHT PANEL -->
+    <main class="glass-panel" style="display:flex; flex-direction:column;">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('spec')">Spec Viewer <span class="tab-indicator" id="ind-spec"></span></div>
+        <div class="tab" onclick="switchTab('endpoints')">Endpoints <span class="tab-indicator" id="ind-endpoints"></span></div>
+        <div class="tab" onclick="switchTab('logs')">Live Logs <span class="tab-indicator" id="ind-logs"></span></div>
+        <div class="tab" onclick="switchTab('results')">Results <span class="tab-indicator" id="ind-results"></span></div>
+        <div class="tab" onclick="switchTab('report')">Detailed Report</div>
+        <div class="tab" onclick="switchTab('fixed')">Patched Code <span class="tab-indicator" id="ind-fixed"></span></div>
+      </div>
+
+      <div class="tab-content active" id="tab-spec">
+        <div class="code-container" id="spec-container">
+          <div class="code-actions" id="spec-actions" style="display:none;">
+            <button class="icon-btn" onclick="copyCode('spec-code')">Copy</button>
+            <button class="icon-btn" onclick="toggleFullscreen('spec-container')">⛶ Fullscreen</button>
+          </div>
+          <pre class="line-numbers code-viewer"><code class="language-json" id="spec-code">// Awaiting spec generation...
+// Upload an API file and click [Generate Spec]</code></pre>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-endpoints">
+        <div id="endpoints-list">
+          <div class="empty-state">
+            <div class="empty-state-graphic"></div>
+            <div>No endpoints detected.<br>Generate a spec first.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-logs">
+        <div id="log-terminal">
+          <div class="log-entry log-info">
+            <span class="log-time">--:--:--</span>
+            <span class="log-prefix">[SYS]</span>
+            <span class="log-msg">System initialized. Awaiting input...</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-results">
+        <div id="results-container">
+          <div class="empty-state">
+            <div class="empty-state-graphic"></div>
+            <div>No test sessions found.<br>Execute Test Suite to begin.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-report" style="padding: 0;">
+        <iframe id="report-frame" src="about:blank" style="width:100%; height:560px; border:none; display:block;"></iframe>
+      </div>
+
+      <div class="tab-content" id="tab-fixed">
+        <div id="fix-meta" class="fix-meta" style="display:none">
+          <span class="bugs-count" id="fix-bug-count">0</span>
+          <span class="bugs-label">vulnerabilities patched</span>
+          <a class="dl-btn" id="fix-download-btn" href="#" download>⬇ Download Patch</a>
+        </div>
+        <div class="code-container" id="fixed-container">
+          <div class="code-actions" id="fixed-actions" style="display:none;">
+            <button class="icon-btn" onclick="copyCode('fixed-code')">Copy</button>
+            <button class="icon-btn" onclick="toggleFullscreen('fixed-container')">⛶ Fullscreen</button>
+          </div>
+          <pre class="line-numbers code-viewer"><code class="language-python" id="fixed-code">// Awaiting AI vulnerability analysis...
+// Run tests first, then click [AI Patch Vulnerabilities]</code></pre>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+<!-- Prism JS for Syntax Highlighting -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+
+<script>
+  let currentApiName = "";
+  let currentSourceFile = "";
+  let currentServerUrl = "";
+  let currentServerPort = "";
+  let logEventSource = null;
+
+  // Sync Timestamp updater
+  setInterval(() => {
+    const now = new Date();
+    document.getElementById('last-sync').textContent = 'Sync: ' + now.toLocaleTimeString();
+  }, 1000);
+
+  // Power User Features
+  function copyCode(id) {
+    const el = document.getElementById(id);
+    navigator.clipboard.writeText(el.textContent).then(() => {
+      alert("Copied to clipboard!");
+    });
+  }
+
+  function toggleFullscreen(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('fullscreen');
+  }
+
+  function markTabReady(tabName) {
+    const ind = document.getElementById('ind-' + tabName);
+    if(ind) ind.classList.add('ready');
+  }
+
+  // ── STEP TRACKER ──
+  function setStep(n) {
+    for (let i = 1; i <= 5; i++) {
+      const s = document.getElementById('step-' + i);
+      s.classList.remove('active', 'done', 'error');
+      if (i < n) s.classList.add('done');
+      else if (i === n) s.classList.add('active');
+    }
+    for (let i = 1; i <= 4; i++) {
+      const c = document.getElementById('conn-' + i);
+      c.classList.remove('active', 'done');
+      if (i < n) c.classList.add('done');
+      else if (i === n) c.classList.add('active');
+    }
+  }
+
+  function setStepError(n) {
+    document.getElementById('step-' + n).classList.add('error');
+  }
+
+  // ── FILE DROP ──
+  const zone = document.getElementById("upload-zone");
+  const fileInput = document.getElementById("file-input");
+
+  zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("drag"); });
+  zone.addEventListener("dragleave", () => zone.classList.remove("drag"));
+  zone.addEventListener("drop", e => {
+    e.preventDefault();
+    zone.classList.remove("drag");
+    const file = e.dataTransfer.files[0];
+    if (file) { fileInput.files = e.dataTransfer.files; showFilename(file.name); }
+  });
+
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files[0]) showFilename(fileInput.files[0].name);
+  });
+
+  function showFilename(name) {
+    document.getElementById("filename-display").textContent = name;
+  }
+
+  function setStatus(msg, type = "info") {
+    const bar = document.getElementById("status-bar");
+    bar.textContent = msg;
+    bar.className = `show status-${type}`;
+  }
+
+  // ── TAB SWITCH ──
+  function switchTab(name) {
+    const names = ["spec", "endpoints", "logs", "results", "report", "fixed"];
+    document.querySelectorAll(".tab").forEach((t, i) => {
+      t.classList.toggle("active", names[i] === name);
+    });
+    document.querySelectorAll(".tab-content").forEach(c => c.classList.remove("active"));
+    document.getElementById("tab-" + name).classList.add("active");
+    if (name === "report" && currentApiName) {
+      document.getElementById("report-frame").src = "/report?api_name=" + currentApiName + "&t=" + Date.now();
+    }
+  }
+
+  // ── LOG STREAM ──
+  const LOG_PREFIX = { info: '[SYS]', success: '[OK]', warn: '[WRN]', error: '[ERR]' };
+
+  function startLogStream() {
+    if (logEventSource) logEventSource.close();
+    const terminal = document.getElementById("log-terminal");
+    terminal.innerHTML = "";
+    logEventSource = new EventSource("/logs");
+    logEventSource.onmessage = e => {
+      const entry = JSON.parse(e.data);
+      if (entry.level === "done") {
+        logEventSource.close();
+        logEventSource = null;
+        appendLog({ level: 'success', msg: 'Stream ended. Testing complete.', time: entry.time || '' });
+        return;
+      }
+      appendLog(entry);
+    };
+  }
+
+  function appendLog(entry) {
+    const terminal = document.getElementById("log-terminal");
+    const div = document.createElement("div");
+    div.className = `log-entry log-${entry.level}`;
+    const prefix = LOG_PREFIX[entry.level] || '[SYS]';
+    div.innerHTML = `<span class="log-time">${entry.time}</span><span class="log-prefix">${prefix}</span><span class="log-msg">${entry.msg}</span>`;
+    terminal.appendChild(div);
+    if (terminal.children.length > 500) terminal.removeChild(terminal.firstChild);
+    terminal.scrollTop = terminal.scrollHeight;
+  }
+
+  // ── GENERATE SPEC ──
+  async function generateSpec() {
+    const file = fileInput.files[0];
+    if (!file) { setStatus("Please select a file first.", "error"); return; }
+
+    const apiName   = document.getElementById("api-name").value.trim() || "custom-api";
+    const serverUrl = document.getElementById("server-url").value.trim() || "http://localhost:8081";
+    const serverPort = document.getElementById("server-port").value.trim() || "8081";
+
+    const btn = document.getElementById("btn-generate");
+    btn.innerHTML = '<span class="spinner"></span>Processing...';
+    btn.disabled = true;
+    setStatus("Analyzing code and generating OpenAPI Spec...", "info");
+    setStep(2);
+    switchTab("logs");
+    startLogStream();
+
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("api_name", apiName);
+    formData.append("server_url", serverUrl);
+    formData.append("server_port", serverPort);
+
+    try {
+      const res  = await fetch("/upload", { method: "POST", body: formData });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus(data.error, "error");
+        setStepError(2);
+        btn.innerHTML = "✨ Generate Spec";
+        btn.disabled = false;
+        return;
+      }
+
+      currentApiName   = data.api_name;
+      currentSourceFile = data.source_file;
+      currentServerUrl  = data.server_url;
+      currentServerPort = data.server_port;
+
+      const specCode = document.getElementById("spec-code");
+      specCode.textContent = JSON.stringify(data.spec, null, 2);
+      Prism.highlightElement(specCode);
+      document.getElementById("spec-actions").style.display = "flex";
+      markTabReady('spec');
+
+      const el = document.getElementById("endpoints-list");
+      el.innerHTML = "";
+      const paths = data.spec.paths || {};
+      Object.entries(paths).forEach(([path, methods]) => {
+        Object.keys(methods).forEach(method => {
+          const badge = document.createElement("div");
+          badge.className = `endpoint-badge method-${method}`;
+          badge.textContent = `${method.toUpperCase()} ${path}`;
+          el.appendChild(badge);
+        });
+      });
+      markTabReady('endpoints');
+
+      setStatus(`Spec generated successfully (${data.endpoints.length} paths discovered)`, "success");
+      setStep(3);
+      btn.innerHTML = "✨ Generate Spec";
+      btn.disabled = false;
+      document.getElementById("btn-start-api").disabled = false;
+      document.getElementById("btn-run-tests").disabled = false;
+      switchTab("spec");
+
+    } catch (e) {
+      setStatus("Network error: " + e.message, "error");
+      setStepError(2);
+      btn.innerHTML = "✨ Generate Spec";
+      btn.disabled = false;
+    }
+  }
+
+  // ── START API ──
+  async function startApi() {
+    if (!currentApiName) return;
+    const btn = document.getElementById("btn-start-api");
+    btn.innerHTML = '<span class="spinner"></span>Initializing...';
+    btn.disabled = true;
+    switchTab("logs");
+
+    await fetch("/start-api", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_name: currentApiName,
+        source_file: currentSourceFile,
+        server_url: currentServerUrl,
+        server_port: currentServerPort
+      })
+    });
+
+    btn.innerHTML = "✅ Server Online";
+    btn.disabled = true;
+    setStatus("API server running on port " + currentServerPort, "success");
+  }
+
+  // ── RUN TESTS ──
+  async function runTests() {
+    if (!currentApiName) return;
+    const btn = document.getElementById("btn-run-tests");
+    btn.innerHTML = '<span class="spinner"></span>Scanning...';
+    btn.disabled = true;
+    document.getElementById("btn-fix-code").disabled = true;
+    setStep(4);
+    switchTab("logs");
+
+    await fetch("/run-tests", { method: "POST" });
+
+    const poll = setInterval(async () => {
+      const res  = await fetch("/results?api_name=" + currentApiName);
+      const data = await res.json();
+      if (data.sessions.length > 0) {
+        renderResults(data.sessions);
+        markTabReady('results');
+        if (data.has_report) {
+          clearInterval(poll);
+          setStep(5);
+          btn.innerHTML = "🚀 Run Test Suite";
+          btn.disabled = false;
+          document.getElementById("btn-fix-code").disabled = false;
+          const vulns = data.sessions[0]?.vulns ?? 0;
+          setStatus(`Scan complete. ${vulns} vulnerabilities detected.`, vulns > 0 ? "error" : "success");
+          switchTab("report");
+        }
+      }
+    }, 3000);
+  }
+
+  // ── FIX CODE ──
+  async function fixCode() {
+    if (!currentApiName || !currentSourceFile) return;
+    const btn = document.getElementById("btn-fix-code");
+    btn.innerHTML = '<span class="spinner"></span>Analyzing...';
+    btn.disabled = true;
+    switchTab("fixed");
+    const fixedCode = document.getElementById("fixed-code");
+    fixedCode.textContent = "// Connecting to AI service...\n// Analyzing test failure signatures...\n// Generating patches...\n\n// ETA: 20-40 seconds";
+    Prism.highlightElement(fixedCode);
+    document.getElementById("fix-meta").style.display = "none";
+
+    try {
+      const res  = await fetch("/fix-code", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ api_name: currentApiName, source_file: currentSourceFile })
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        fixedCode.textContent = "// ERROR: " + (data.error || "Unknown error");
+        Prism.highlightElement(fixedCode);
+        btn.innerHTML = "🔧 AI Patch Vulnerabilities";
+        btn.disabled = false;
+        return;
+      }
+
+      fixedCode.textContent = data.fixed_code;
+      Prism.highlightElement(fixedCode);
+      document.getElementById("fixed-actions").style.display = "flex";
+      markTabReady('fixed');
+
+      document.getElementById("fix-bug-count").textContent = data.bugs_found;
+      document.getElementById("fix-meta").style.display = "flex";
+
+      const blob  = new Blob([data.fixed_code], { type: "text/x-python" });
+      const url   = URL.createObjectURL(blob);
+      const dlBtn = document.getElementById("fix-download-btn");
+      dlBtn.href     = url;
+      dlBtn.download = data.fixed_file;
+
+      btn.innerHTML = "🔧 AI Patch Vulnerabilities";
+      btn.disabled = false;
+      setStatus(`${data.bugs_found} vulnerabilities patched. Download ready.`, "success");
+
+    } catch (e) {
+      fixedCode.textContent = "// NETWORK ERROR: " + e.message;
+      Prism.highlightElement(fixedCode);
+      btn.innerHTML = "🔧 AI Patch Vulnerabilities";
+      btn.disabled = false;
+    }
+  }
+
+  // ── RENDER RESULTS ──
+  function renderResults(sessions) {
+    const container = document.getElementById("results-container");
+    container.innerHTML = "";
+    sessions.forEach(s => {
+      const total = s.passed + s.failed;
+      const pct   = total > 0 ? Math.round((s.passed / total) * 100) : 0;
+      const vulns = s.vulns ?? 0;
+      container.innerHTML += `
+        <div class="result-card">
+          <div class="result-session">${s.session}</div>
+          <div class="result-stats">
+            <div class="stat stat-pass">
+              <span class="num">${s.passed}</span>
+              <div class="label">PASSED</div>
+            </div>
+            <div class="stat stat-fail">
+              <span class="num">${s.failed}</span>
+              <div class="label">FAILED</div>
+            </div>
+            <div class="stat stat-total">
+              <span class="num">${total}</span>
+              <div class="label">TOTAL</div>
+            </div>
+            <div class="stat stat-rate">
+              <span class="num">${pct}%</span>
+              <div class="label">PASS RATE</div>
+            </div>
+            <div class="stat stat-vuln">
+              <span class="num">${vulns}</span>
+              <div class="label">VULNERABILITIES</div>
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+</script>
+</body>
+</html>
