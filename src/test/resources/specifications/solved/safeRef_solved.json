@@ -1,0 +1,40 @@
+{
+  "openapi": "3.0.0",
+  "servers": [
+    {
+      "url": "http://localhost"
+    }
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "getRoot"
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "MyBaseSchema": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        },
+        "x-componentName": "MyBaseSchema"
+      },
+      "MyReferredSchema": {
+        "properties": {
+          "baseSchema": {
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            },
+            "x-componentName": "MyBaseSchema"
+          }
+        },
+        "x-componentName": "MyReferredSchema"
+      }
+    }
+  }
+}
